@@ -9,10 +9,10 @@ typedef struct
    char fileName[50];
 } File;
 
-bool checkFileExist(File *file);
+bool check_file_exist(File *file);
 
-void readFileContent(File *file);
+void read_file_content(File file);
 
-void closeFile(File *file);
+void close_file(File file);
 
 #endif

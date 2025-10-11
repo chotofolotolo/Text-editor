@@ -1,38 +1,31 @@
 #include "../include/file.h"
+#include "../include/parameter.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 
-bool isAValidFileParameter(int argc, char **argv)
+bool is_a_valid_file_parameter(int argc, char **argv)
 {
-    if (argc > 1)
-    {
-        // printf(stdout, "====== VALID PARAMETERS =====\n");//=== DEBUG ===
-        return true;
-    }
-    else
-    {
-        fprintf(stdout, "===== INVALID PARAMETERS ====\n");
-        return false;
-    }
+    return argc > 1;
 }
 
-void readFileNameParameter(File *file, char **argv)
+void read_file_name_parameter(Parameter *parameter)
 {
-    strcat(file->fileName, argv[1]);
+    strcat(parameter->file.fileName, parameter->argv[1]);
 }
 
-void removeCharAtIndex(char *str, int index)
+/*
+void remove_char_at_index(char *file_name, int index)
 {
-    int len = strlen(str);
+    int len = strlen(file_name);
     if (index < 0 || index >= len)
     {
-        // printf("Invalid index.\n");//=== DEBUG ===
         return;
     }
 
     for (int i = index; i < len; i++)
     {
-        str[i] = str[i + 1];
+        file_name[i] = file_name[i + 1];
     }
 }
+*/

@@ -1,4 +1,4 @@
-#include "../include/file.h"
+#include "file.h"
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 

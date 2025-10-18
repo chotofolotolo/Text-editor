@@ -6,7 +6,6 @@
 
 File file;
 Parameter parameter;
-UI ui;
 
 bool initialize_program(int argc, char **argv)
 {
@@ -17,7 +16,7 @@ bool initialize_program(int argc, char **argv)
     {
         parameter.argc = argc;
         parameter.argv = argv;
-        printf("VALID_FILE_PARAMETER FUNC\n\n");//DEBUG
+        printf("VALID_FILE_PARAMETER FUNC\n\n"); // DEBUG
         read_file_name_parameter(&parameter);
         fprintf(stdout, "%s\n", parameter.file.fileName); // DEBUG
 
@@ -40,18 +39,21 @@ bool initialize_program(int argc, char **argv)
 
 void run_program()
 {
-    setlocale(LC_ALL, ""); //DEBUG,Usa la configuración de locale del sistema operativo
+    setlocale(LC_ALL, ""); // DEBUG,Usa la configuración de locale del sistema operativo
 
-    printf("READ FILE CONTENT FUNC\n");//DEBUG
+    printf("READ FILE CONTENT FUNC\n"); // DEBUG
     read_file_content(parameter.file);
-    printf("INIT UI FUNC\n");//DEBUG
+    printf("INIT UI FUNC\n"); // DEBUG
 
     init_ui_impl(&ui);
-    while (true) // DEBUG
+    ui.setup_ui(&ui);
+    printf("SETUP_UI\n"); // DEBUG
+
+    while (getch() != 'q') // DEBUG
     {
         ui.init_ui(&ui);
     }
-    // fprintf(stderr, "window=%p\n", (void *)ui.header->header_window);
+    fprintf(stdout, "==UI TERMINATED==\n");
 }
 
 void finish_program()

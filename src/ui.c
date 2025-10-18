@@ -2,46 +2,53 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void init_ui_impl(UI *ui)
-{
-    ui->setup_ui = &setup_ui;
-    ui->init_ui = &init_ui;
-    ui->draw_ui = &draw_ui;
-    // ui->header = malloc(sizeof(Header));
-    ui->text_area = malloc(sizeof(Text_area));
-    ui->nav_bar = malloc(sizeof(Nav_bar));
-}
-
-void setup_ui(UI *ui)
-{
-    initscr(); // Inicializa ncurses
-    cbreak();
-    noecho();
-    keypad(stdscr, TRUE);
-
-    // Crear ventana nueva
-    ui->header->header_window = newwin(10, 30, 5, 10);
-    ui->header->create_header();
-
-    // Espera tecla para que se vea
-    // getch();
-}
+UI ui;
 
 void draw_ui(UI *ui)
 {
-    box(ui->header->header_window, 0, 0); // Dibuja el borde a header
-    wattron(ui->header->header_window, A_BOLD);
-    mvwprintw(ui->header->header_window, 1, 1, "Text-editor");
-    wattroff(ui->header->header_window, A_BOLD);
-    wrefresh(ui->header->header_window);
+    ui->header->draw_header(ui);
+    // ui->nav_bar->draw_nav_bar(&ui);
+    // ui->text_area->draw_text_area(&ui);
 }
 
 void init_ui(UI *ui)
 {
+    ui->draw_ui(ui);
+}
+
+void init_ui_impl(UI *ui)
+{
+    printf("INIT_UI_IMPL\n"); // DEBUG
+    ui->init_ui = init_ui;
+    ui->setup_ui = setup_ui;
+    ui->draw_ui = draw_ui;
+    ui->header = malloc(sizeof(Header));
+    init_header_impl(ui->header);
+    // ui->header->create_header();
+}
+
+void setup_ui(UI *ui)
+{
+    printf("SETUP_UI\n"); // DEBUG
+    initscr();            // Inicializa ncurses
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+
+    // init_ui_impl(ui);
+    //  Crear ventana nueva
+    ui->header->init_attr_header(ui->header,10, 30, 5, 10);
+    ui->header->header_window = newwin(10, 30, 5, 10);
+
+    // setup_ui(ui);
+    // ui->init_ui(ui);
+    // Espera tecla para que se vea
+    // getch();
 }
 
 WINDOW *create_newWin(int height, int width, int posY, int posX)
 {
+    printf("CREATE_NEWWIN\n");                                // DEBUG
     WINDOW *local_window = newwin(height, width, posY, posX); // dynamic struct,exist after function call
     // box(local_window, 0, 0);
     return local_window;

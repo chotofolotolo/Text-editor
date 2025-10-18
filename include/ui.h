@@ -1,5 +1,6 @@
 #include <ncurses.h>
-#include "header.h"
+#include "../include/header.h"
+
 #ifndef UI_H
 #define UI_H
 
@@ -18,6 +19,7 @@ typedef struct UI
     Header *header;
     Text_area *text_area;
     Nav_bar *nav_bar;
+    // WINDOW *stdscr;
     void (*setup_ui)(UI *ui);
     void (*draw_ui)(UI *ui);
     void (*init_ui)(struct UI *ui);
